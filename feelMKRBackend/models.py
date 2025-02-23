@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 class Utilisateur(models.Model):
     TYPE_UTILISATEUR_CHOICES = [
-        ('videaste', 'Videaste'),
-        ('client', 'Client'),
+        'videaste',
+        'client',
     ]
 
     nom = models.CharField(max_length=100)
@@ -19,8 +19,8 @@ class Portfolio(models.Model):
 
 class Media(models.Model):
     TYPE_MEDIA_CHOICES = [
-        ('photo', 'Photo'),
-        ('video', 'Vidéo'),
+        'photo',
+        'video',
     ]
 
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)

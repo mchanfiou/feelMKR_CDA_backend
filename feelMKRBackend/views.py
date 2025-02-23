@@ -1,6 +1,7 @@
-from rest_framework import generics
+from django.shortcuts import render
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from .models import Utilisateur, Portfolio, Media, Service, Reservation, Devis, Facture, Personnalisation
 from .serializers import (UtilisateurSerializer, PortfolioSerializer, MediaSerializer,
                           ServiceSerializer, ReservationSerializer, DevisSerializer,
@@ -9,8 +10,7 @@ from .serializers import (UtilisateurSerializer, PortfolioSerializer, MediaSeria
 # Vues Utilisateur
 class UtilisateurListCreate(generics.ListCreateAPIView):
     queryset = Utilisateur.objects.all()
-    serializer_class = UtilisateurSerializer
-
+    serializer_class = UtilisateurSerializer   
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -25,7 +25,12 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
 class UtilisateurRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Utilisateur.objects.all()
     serializer_class = UtilisateurSerializer
+    permission_classes = [IsAuthenticated]
 
+class IsVideaste(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.type_utilisateur == 'videaste'
+    
 # Vues Portfolio
 class PortfolioListCreate(generics.ListCreateAPIView):
     queryset = Portfolio.objects.all()
