@@ -5,6 +5,7 @@ class UtilisateurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Utilisateur
         fields = '__all__'
+        extra_kwargs = {'mot_de_passe': {'write_only': True}}  # Exclure le mot de passe de la lecture
 
 class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:

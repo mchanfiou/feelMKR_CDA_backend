@@ -1,37 +1,90 @@
-from rest_framework import viewsets
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Utilisateur, Portfolio, Media, Service, Reservation, Devis, Facture, Personnalisation
 from .serializers import (UtilisateurSerializer, PortfolioSerializer, MediaSerializer,
                           ServiceSerializer, ReservationSerializer, DevisSerializer,
                           FactureSerializer, PersonnalisationSerializer)
 
-class UtilisateurViewSet(viewsets.ModelViewSet):
+# Vues Utilisateur
+class UtilisateurListCreate(generics.ListCreateAPIView):
     queryset = Utilisateur.objects.all()
     serializer_class = UtilisateurSerializer
 
-class PortfolioViewSet(viewsets.ModelViewSet):
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Hachage du mot de passe
+        utilisateur = Utilisateur(**serializer.validated_data)
+        utilisateur.set_password(serializer.validated_data['mot_de_passe'])
+        utilisateur.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class UtilisateurRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Utilisateur.objects.all()
+    serializer_class = UtilisateurSerializer
+
+# Vues Portfolio
+class PortfolioListCreate(generics.ListCreateAPIView):
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioSerializer
 
-class MediaViewSet(viewsets.ModelViewSet):
+class PortfolioRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer
+
+# Vues Media
+class MediaListCreate(generics.ListCreateAPIView):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
 
-class ServiceViewSet(viewsets.ModelViewSet):
+class MediaRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Media.objects.all()
+    serializer_class = MediaSerializer
+
+# Vues Service
+class ServiceListCreate(generics.ListCreateAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
 
-class ReservationViewSet(viewsets.ModelViewSet):
+class ServiceRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+
+# Vues Reservation
+class ReservationListCreate(generics.ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
 
-class DevisViewSet(viewsets.ModelViewSet):
+class ReservationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+
+# Vues Devis
+class DevisListCreate(generics.ListCreateAPIView):
     queryset = Devis.objects.all()
     serializer_class = DevisSerializer
 
-class FactureViewSet(viewsets.ModelViewSet):
+class DevisRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Devis.objects.all()
+    serializer_class = DevisSerializer
+
+# Vues Facture
+class FactureListCreate(generics.ListCreateAPIView):
     queryset = Facture.objects.all()
     serializer_class = FactureSerializer
 
-class PersonnalisationViewSet(viewsets.ModelViewSet):
+class FactureRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Facture.objects.all()
+    serializer_class = FactureSerializer
+
+# Vues Personnalisation
+class PersonnalisationListCreate(generics.ListCreateAPIView):
+    queryset = Personnalisation.objects.all()
+    serializer_class = PersonnalisationSerializer
+
+class PersonnalisationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Personnalisation.objects.all()
     serializer_class = PersonnalisationSerializer
