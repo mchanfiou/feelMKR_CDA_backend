@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'feelMKRBackend',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -56,7 +56,9 @@ REST_FRAMEWORK = {
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1'] 
 
-DATABASE_URL = os.getenv('DATABASE_URL')
+# DATABASE_URL = os.getenv('DATABASE_URL')
+
+ROOT_URLCONF = os.getenv('ROOT_URLCONF')
 
 DATABASES = {
     'default': {

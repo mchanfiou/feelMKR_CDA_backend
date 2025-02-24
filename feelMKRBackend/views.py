@@ -10,15 +10,19 @@ from .serializers import (UtilisateurSerializer, PortfolioSerializer, MediaSeria
 # Vues Utilisateur
 class UtilisateurListCreate(generics.ListCreateAPIView):
     queryset = Utilisateur.objects.all()
-    serializer_class = UtilisateurSerializer   
+    serializer_class = UtilisateurSerializer
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Hachage du mot de passe
-        utilisateur = Utilisateur(**serializer.validated_data)
-        utilisateur.set_password(serializer.validated_data['mot_de_passe'])
-        utilisateur.save()
+        # Utilisation du gestionnaire pour créer l'utilisateur
+        utilisateur = Utilisateur.objects.create_user(
+            email=serializer.validated_data['email'],
+            nom=serializer.validated_data['nom'],
+            mot_de_passe=serializer.validated_data['mot_de_passe'],
+            type_utilisateur=serializer.validated_data['type_utilisateur']
+        )
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
