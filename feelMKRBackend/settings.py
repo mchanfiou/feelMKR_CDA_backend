@@ -7,7 +7,7 @@ load_dotenv()
 DEBUG = os.getenv('DEBUG')
 
 # Récupère la clé secrète
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="_e%qms%*-i8!0p+48omg&^_si%if6q1@4u&h=^xsyj@o9z@=^z") 
 
 
 TEMPLATES = [
