@@ -71,7 +71,7 @@ if IS_TESTING:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': "postgres",  # Base de test locale
+            'NAME': "feelmkr",  # Base de test locale
             'USER': "mouss",       # Ton user PostgreSQL local
             'PASSWORD': "",   # Ton mot de passe PostgreSQL
             'HOST': "localhost",      # PostgreSQL en local
