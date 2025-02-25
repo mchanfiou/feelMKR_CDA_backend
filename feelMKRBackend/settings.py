@@ -57,19 +57,19 @@ REST_FRAMEWORK = {
     ),
 }
 
-ALLOWED_HOSTS = ["feelmkr-cda-backend.onrender.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["feelmkr-cda-backend.onrender.com", "127.0.0.1", "aws-0-eu-west-3.pooler.supabase.com"]
 
-# DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 ROOT_URLCONF = os.getenv("ROOT_URLCONF")
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "FeelMKR",
-        "USER": "postgres",
-        "PASSWORD": "root",
-        "HOST": "localhost",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("DBNAME"),
+        'USER': os.getenv("DBUSER"),
+        'PASSWORD': os.getenv("DBPASSWORD"),
+        'HOST': os.getenv("HOST"),
+        'PORT': os.getenv("PORT"), 
     }
 }
