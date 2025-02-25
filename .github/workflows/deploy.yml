@@ -10,6 +10,15 @@ jobs:
   lint-and-test:
     name: Lint & Test Backend
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+        ports:
+          - 5432:5432
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -44,7 +53,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          pytest --cov
+          pytest --cov --reusedb
 
   deploy:
     name: Deploy to Render

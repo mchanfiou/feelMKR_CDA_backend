@@ -1,9 +1,12 @@
 import os
+import sys
 
 from dotenv import load_dotenv
 
 # Charge les variables d'environnement à partir du fichier .env
 load_dotenv()
+
+IS_TESTING = "pytest" in sys.argv[0]
 
 DEBUG = os.getenv("DEBUG")
 
@@ -64,13 +67,25 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 ROOT_URLCONF = os.getenv("ROOT_URLCONF")
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DBNAME"),
-        'USER': os.getenv("DBUSER"),
-        'PASSWORD': os.getenv("DBPASSWORD"),
-        'HOST': os.getenv("HOST"),
-        'PORT': os.getenv("PORT"),
+if IS_TESTING:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': "postgres",  # Base de test locale
+            'USER': "postgres",       # Ton user PostgreSQL local
+            'PASSWORD': "password",   # Ton mot de passe PostgreSQL
+            'HOST': "localhost",      # PostgreSQL en local
+            'PORT': "5432",           # Port par défaut de PostgreSQL
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv("DBNAME"),
+            'USER': os.getenv("DBUSER"),
+            'PASSWORD': os.getenv("DBPASSWORD"),
+            'HOST': os.getenv("HOST"),
+            'PORT': os.getenv("PORT"),
+        }
+    }
