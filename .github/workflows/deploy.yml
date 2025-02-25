@@ -16,7 +16,7 @@ jobs:
         env:
           POSTGRES_DB: feelmkr
           POSTGRES_USER: mouss
-          POSTGRES_PASSWORD:
+          POSTGRES_PASSWORD: root
         ports:
           - 5432:5432
     steps:
