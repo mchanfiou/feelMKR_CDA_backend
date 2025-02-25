@@ -1,0 +1,2 @@
+ignore = E501, F401
+select = E, W 
