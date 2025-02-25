@@ -2,20 +2,28 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 
 class UtilisateurManager(BaseUserManager):
-    def create_user(self, email, nom, mot_de_passe=None, **extra_fields):
+    def create_user(self, email, nom, type_utilisateur, password=None):
         if not email:
             raise ValueError('L\'email doit être renseigné')
+
         email = self.normalize_email(email)
-        utilisateur = self.model(email=email, nom=nom, **extra_fields)
-        utilisateur.set_password(mot_de_passe)  # Hachage du mot de passe
+        utilisateur = self.model(email=email, nom=nom, type_utilisateur=type_utilisateur)
+
+        if password:  # Vérifie si un mot de passe est fourni
+            utilisateur.set_password(password)  # Hachage du mot de passe
+
         utilisateur.save(using=self._db)
         return utilisateur
 
-    def create_superuser(self, email, nom, mot_de_passe=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+    def create_superuser(self, email, nom, password=None):
+        utilisateur = self.create_user(email=email, nom=nom, type_utilisateur='videaste', password=password)
 
-        return self.create_user(email, nom, mot_de_passe, **extra_fields)
+        utilisateur.is_staff = True  # Accès au panel admin
+        utilisateur.is_superuser = True  # Droits super-utilisateur
+
+        utilisateur.save(using=self._db)
+        return utilisateur
+
 
 
 class Utilisateur(AbstractBaseUser, PermissionsMixin):
@@ -29,7 +37,6 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
 
     nom = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    mot_de_passe = models.CharField(max_length=255)
     type_utilisateur = models.CharField(max_length=20, choices=TYPE_UTILISATEUR_CHOICES)
 
     date_creation = models.DateTimeField(auto_now_add=True)
@@ -52,12 +59,6 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
-    def save(self, *args, **kwargs):
-        # Hachage du mot de passe avant de sauvegarder
-        if self.mot_de_passe:
-            self.set_password(self.mot_de_passe)
-        super().save(*args, **kwargs)
 
 
 class Portfolio(models.Model):

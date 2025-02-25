@@ -20,11 +20,11 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
         utilisateur = Utilisateur.objects.create_user(
             email=serializer.validated_data['email'],
             nom=serializer.validated_data['nom'],
-            mot_de_passe=serializer.validated_data['mot_de_passe'],
+            password=serializer.validated_data['password'],
             type_utilisateur=serializer.validated_data['type_utilisateur']
         )
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
 
 class UtilisateurRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Utilisateur.objects.all()
