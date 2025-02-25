@@ -30,18 +30,17 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+      - name: Format with black
+        run: |
+          black .
+      
+      - name: Organize imports with isort
+        run: |
+          isort .
 
       - name: Lint & Format Check
         run: |
           flake8 .
-          
-      - name: Format with black
-        run: |
-          black .
-    
-      - name: Organize imports with isort
-        run: |
-          isort .
 
       - name: Run pytest
         run: |
