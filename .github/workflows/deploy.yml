@@ -20,6 +20,13 @@ jobs:
           python-version: '3.13.2'
           cache: 'pip'
 
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+            path: ~/.cache/pip
+            key: setup-python-${{ runner.os }}-python-${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}
+            restore-keys: setup-python-${{ runner.os }}-python-${{ matrix.python-version }}-pip-
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -27,7 +34,14 @@ jobs:
       - name: Lint & Format Check
         run: |
           flake8 .
-          black --check .
+          
+      - name: Format with black
+        run: |
+          black .
+    
+      - name: Organize imports with isort
+        run: |
+          isort .
 
       - name: Run pytest
         run: |

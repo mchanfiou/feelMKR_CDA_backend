@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class FeelmkrbackendConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'feelMKRBackend'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "feelMKRBackend"
