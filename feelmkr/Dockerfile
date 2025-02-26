@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r feelmkr/requirements.txt
 EXPOSE 8000
 
 # Commande pour lancer le serveur Django
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "feelMKRBackend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "feelmkr.feelMKRBackend.wsgi:application"]
