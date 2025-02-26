@@ -23,7 +23,6 @@ from .serializers import (
     UtilisateurSerializer,
 )
 
-
 # Vues Utilisateur
 class UtilisateurListCreate(generics.ListCreateAPIView):
     queryset = Utilisateur.objects.all()
@@ -34,7 +33,7 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         # Utilisation du gestionnaire pour créer l'utilisateur
-        utilisateur = Utilisateur.objects.create_user(
+        Utilisateur.objects.create_user(
             email=serializer.validated_data["email"],
             nom=serializer.validated_data["nom"],
             password=serializer.validated_data["password"],
