@@ -26,4 +26,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ghcr.io/feelmkr_cda_backend/backend:latest
+          tags: ghcr.io/mchanfiou/feelmkr_cda_backend:latest
