@@ -72,7 +72,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/mchanfiou/feelmkr_cda_backend:latest .
+          docker build -t ghcr.io/mchanfiou/feelmkr_cda_backend:latest -f feelmkr/Dockerfile .
 
       - name: Push Docker image
         run: |
