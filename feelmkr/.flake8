@@ -1,4 +1,4 @@
 [flake8]
-max-line-length = 100  # Augmenter la limite des lignes trop longues
-ignore = E501,F401,F841  # Ignorer les erreurs spécifiques
+max-line-length = 100
+ignore = E501,F401,F841
 select = E,W 
