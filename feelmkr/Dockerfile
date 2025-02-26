@@ -1,17 +1,16 @@
-# Utilise une image Python officielle avec la bonne version
-FROM python:3.13.2
+FROM python:3.13
 
-# Définir le répertoire de travail
+# Set the working directory
 WORKDIR /app
 
-# Copier les fichiers du projet
+# Copy the requirements file
+COPY feelmkr/requirements.txt .
+
+# Install dependencies
+RUN pip install -r feelmkr/requirements.txt
+
+# Copy the entire project
 COPY . .
 
-# Installer les dépendances
-RUN pip install --no-cache-dir -r feelmkr/requirements.txt
-
-# Exposer le port (ajuste si nécessaire)
-EXPOSE 8000
-
-# Commande pour lancer le serveur Django
+# Set the entry point
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "feelmkr.feelMKRBackend.wsgi:application"]
