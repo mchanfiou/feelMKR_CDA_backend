@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Installer les dépendances
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r feelmkr/requirements.txt
 
 # Exposer le port (ajuste si nécessaire)
 EXPOSE 8000
