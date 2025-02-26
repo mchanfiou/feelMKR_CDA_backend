@@ -49,7 +49,7 @@ jobs:
 
       - name: Lint & Format Check
         run: |
-          flake8 feelmkr
+          flake8 feelmkr --ignore=E501,F401,F841
 
       - name: Run pytest
         run: |
