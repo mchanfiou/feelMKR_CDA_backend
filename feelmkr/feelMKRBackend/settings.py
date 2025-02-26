@@ -15,7 +15,6 @@ SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY", default="_e%qms%*-i8!0p+48omg&^_si%if6q1@4u&h=^xsyj@o9z@=^z"
 )
 
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
