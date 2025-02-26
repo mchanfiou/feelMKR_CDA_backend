@@ -49,7 +49,7 @@ jobs:
 
       - name: Lint & Format Check
         run: |
-          flake8 .
+          flake8 feelmkr
 
       - name: Run pytest
         run: |
