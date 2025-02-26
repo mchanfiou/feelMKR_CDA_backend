@@ -1,6 +1,6 @@
 import pytest
 
-from feelMKRBackend.models import Utilisateur
+from feelMKRBackendr.models import Utilisateur
 
 
 @pytest.mark.django_db
