@@ -10,15 +10,14 @@ from .views import (
     ReservationListCreate, ReservationRetrieveUpdateDestroy,
     ServiceListCreate, ServiceRetrieveUpdateDestroy,
     UtilisateurListCreate, UtilisateurRetrieveUpdateDestroy,
-    UtilisateurList, UtilisateurDetail, UtilisateurByTypeList,
-    PortfolioList, PortfolioDetail, PortfolioByUtilisateurList,
-    MediaList, MediaDetail, MediaByPortfolioList,
-    ServiceList, ServiceDetail,
-    ReservationList, ReservationDetail,
+    UtilisateurList, UtilisateurByTypeList,
+    PortfolioList, PortfolioByUtilisateurList,
+    MediaList,  MediaByPortfolioList,
+    ServiceList, ReservationList,
     ReservationByDateList, ReservationByUtilisateurList,
-    DevisList, DevisDetail, DevisByUtilisateurList,
-    FactureList, FactureDetail, FactureByUtilisateurList,
-    PersonnalisationList, PersonnalisationDetail,
+    DevisList, DevisByUtilisateurList,
+    FactureList, FactureByUtilisateurList,
+    PersonnalisationList,
 )
 
 urlpatterns = [
