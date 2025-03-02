@@ -17,7 +17,7 @@ from .views import (
     ReservationByDateList, ReservationByUtilisateurList,
     DevisList, DevisByUtilisateurList,
     FactureList, FactureByUtilisateurList,
-    PersonnalisationList,
+    PersonnalisationList,generer_devis_ia,
 )
 
 urlpatterns = [
@@ -71,4 +71,6 @@ urlpatterns = [
     path("personnalisations/", PersonnalisationListCreate.as_view(), name="personnalisation-list-create"),
     path("personnalisations/<int:pk>/", PersonnalisationRetrieveUpdateDestroy.as_view(), name="personnalisation-detail"),
     path('personalisations/all/', PersonnalisationList.as_view(), name='personnalisation-list'),
+
+    path("devis/generer-ia/", generer_devis_ia, name="generer_devis_ia"),
 ]

@@ -22,6 +22,12 @@ from .serializers import (
     ServiceSerializer,
     UtilisateurSerializer,
 )
+import io
+import google.generativeai as genai
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from reportlab.pdfgen import canvas
 
 # Vues Utilisateur
 class UtilisateurListCreate(generics.ListCreateAPIView):
@@ -266,3 +272,54 @@ class PersonnalisationList(generics.ListAPIView):
 class PersonnalisationDetail(generics.RetrieveAPIView):
     queryset = Personnalisation.objects.all()
     serializer_class = PersonnalisationSerializer
+
+# Configuration de Google Generative AI
+genai.configure(api_key="VOTRE_CLE_API")
+
+@csrf_exempt
+def generer_devis_ia(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            # Récupération des données du formulaire frontend
+            nom = data.get("nom")
+            prenom = data.get("prenom")
+            adresse = data.get("adresse")
+            nom_service = data.get("nom_service")
+            prix_service = data.get("prix_service")
+
+            if not all([nom, prenom, adresse, nom_service, prix_service]):
+                return HttpResponse("Données manquantes", status=400)
+
+            # Génération du devis via l'IA
+            prompt = (
+                f"Crée un devis structuré en texte pour {prenom} {nom}, résidant à {adresse}, "
+                f"concernant le service '{nom_service}' d'un montant de {prix_service} €. "
+                f"Inclus une mise en page formelle avec le titre 'Devis', la date, et les détails du service."
+            )
+
+            response = genai.generate_text(prompt)
+            texte_devis = response.text if response and response.text else "Erreur lors de la génération du devis."
+
+            # Création du PDF directement à partir du texte généré
+            buffer = io.BytesIO()
+            pdf = canvas.Canvas(buffer)
+            pdf.drawString(100, 800, "Devis AI - feelMKR")
+            y = 780
+
+            for line in texte_devis.split("\n"):
+                pdf.drawString(100, y, line)
+                y -= 20
+
+            pdf.save()
+
+            buffer.seek(0)
+            response = HttpResponse(buffer, content_type="application/pdf")
+            response["Content-Disposition"] = 'attachment; filename="devis.pdf"'
+            return response
+
+        except json.JSONDecodeError:
+            return HttpResponse("Format JSON invalide", status=400)
+
+    return HttpResponse("Méthode non autorisée", status=405)
