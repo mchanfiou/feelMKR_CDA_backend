@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r feelmkr/requirements.txt
+          pip install -r .\feelmkr\requirements.txt
       - name: Format with black
         run: |
           black .
@@ -53,7 +53,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          pytest --cov feelmkr
+          cd .\feelmkr\feelMKRBackend pytest --cov feelMKRBackend
 
   build-and-push:
     name: Build and Push Docker Image
