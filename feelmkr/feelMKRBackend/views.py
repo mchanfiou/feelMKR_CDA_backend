@@ -41,14 +41,29 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         # Utilisation du gestionnaire pour créer l'utilisateur
-        Utilisateur.objects.create_user(
+        user = Utilisateur.objects.create_user(
             email=serializer.validated_data["email"],
             nom=serializer.validated_data["nom"],
             password=serializer.validated_data["password"],
             type_utilisateur=serializer.validated_data["type_utilisateur"],
         )
 
-        return Response(status=status.HTTP_201_CREATED)
+        # Créer le token JWT
+        token_obtain_serializer = TokenObtainPairSerializer(data={
+            'email': user.email,
+            'username' : user.email 
+            'password': serializer.validated_data["password"]
+        })
+        
+        # Vérifier que les informations sont valides
+        token_obtain_serializer.is_valid(raise_exception=True)
+
+        # Retourner la réponse avec les tokens JWT
+        tokens = token_obtain_serializer.validated_data
+        return Response({
+            'access': tokens['access'],
+            'refresh': tokens['refresh']
+        }, status=status.HTTP_201_CREATED)
 
 
 class UtilisateurRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
