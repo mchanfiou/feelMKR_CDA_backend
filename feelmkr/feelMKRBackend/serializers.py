@@ -63,8 +63,14 @@ class PersonnalisationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    username = serializers.EmailField()  # Change le champ username par email
-    
     def validate(self, attrs):
-        # Personnalise la validation si nécessaire
+        email = attrs.get("username")  # Remplace "username" par "email"
+        password = attrs.get("password")
+
+        from django.contrib.auth import authenticate
+        user = authenticate(email=email, password=password)
+
+        if not user:
+            raise serializers.ValidationError("No active account found with the given credentials")
+
         return super().validate(attrs)
