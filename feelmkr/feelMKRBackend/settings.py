@@ -63,6 +63,13 @@ REST_FRAMEWORK = {
     ),
 }
 
+SIMPLE_JWT = {
+    "USER_ID_FIELD": "id",  # Laisse l'ID comme identifiant interne
+    "USER_ID_CLAIM": "user_id",  # Nom du champ utilisé dans le token
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTHENTICATION_CLASSSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
+}
+
 ALLOWED_HOSTS = ["feelmkr-cda-backend.onrender.com", "127.0.0.1", "aws-0-eu-west-3.pooler.supabase.com"]
 
 DATABASE_URL = os.getenv('DATABASE_URL')
