@@ -40,25 +40,32 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Utilisation du gestionnaire pour créer l'utilisateur
-        user = Utilisateur.objects.create_user(
-            email=serializer.validated_data["email"],
-            nom=serializer.validated_data["nom"],
-            password=serializer.validated_data["password"],
-            type_utilisateur=serializer.validated_data["type_utilisateur"],
-        )
+        # Vérifiez si l'utilisateur est un superutilisateur
+        is_superuser = request.data.get("is_superuser", False)
 
-        if not user.is_active:
-            user.is_active = True
-            user.save()
+        # Utilisation du gestionnaire pour créer un utilisateur ou superutilisateur
+        if is_superuser:
+            user = Utilisateur.objects.create_superuser(
+                email=serializer.validated_data["email"],
+                nom=serializer.validated_data["nom"],
+                password=serializer.validated_data["password"],
+                type_utilisateur=serializer.validated_data["type_utilisateur"],
+            )
+        else:
+            user = Utilisateur.objects.create_user(
+                email=serializer.validated_data["email"],
+                nom=serializer.validated_data["nom"],
+                password=serializer.validated_data["password"],
+                type_utilisateur=serializer.validated_data["type_utilisateur"],
+            )
 
         # Créer le token JWT
         token_obtain_serializer = CustomTokenObtainPairSerializer(data={
             'email': user.email,
-            'username' : user.email, 
+            'username': user.email, 
             'password': serializer.validated_data["password"]
         })
-        
+
         # Vérifier que les informations sont valides
         token_obtain_serializer.is_valid(raise_exception=True)
 
