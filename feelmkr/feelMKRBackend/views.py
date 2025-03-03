@@ -52,7 +52,7 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
         token_obtain_serializer = TokenObtainPairSerializer(data={
             'email': user.email,
             'username' : user.email 
-            'password': serializer.validated_data["password"]
+            'password': user.password
         })
         
         # Vérifier que les informations sont valides
