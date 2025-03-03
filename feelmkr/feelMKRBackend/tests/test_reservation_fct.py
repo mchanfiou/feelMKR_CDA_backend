@@ -20,11 +20,10 @@ def test_reservation_service():
     )
 
     response = client.post(
-        "/api/reserver_service/", 
-        {"client_id": utilisateur.id, "service_id": service.id}, 
+        "/reservations/", 
+        {"client": utilisateur.id, "service": service.id, "date_reservee": "2025-03-04", "statut": "en attente"}, 
         format="json"
     )
-
     assert response.status_code == 201
     assert response.data["message"] == "Réservation réussie"
 

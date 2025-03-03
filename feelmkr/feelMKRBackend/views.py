@@ -162,6 +162,17 @@ class ServiceDetail(generics.RetrieveAPIView):
 class ReservationListCreate(generics.ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            reservation = serializer.save()
+            return Response(
+                {
+                    "message": "Réservation réussie",
+                }, 
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ReservationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
