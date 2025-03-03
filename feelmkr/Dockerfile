@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Set the entry point
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "feelmkr.feelMKRBackend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "feelMKRBackend.wsgi:application"]
