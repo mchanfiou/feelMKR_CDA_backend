@@ -1,5 +1,5 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import (
     DevisListCreate, DevisRetrieveUpdateDestroy,
@@ -15,14 +15,14 @@ from .views import (
     MediaList,  MediaByPortfolioList,
     ServiceList, ReservationList,
     ReservationByDateList, ReservationByUtilisateurList,
-    DevisList, DevisByUtilisateurList,
+    DevisList, DevisByUtilisateurList,CustomTokenObtainPairView,
     FactureList, FactureByUtilisateurList,
     PersonnalisationList,generer_devis_ia,
 )
 
 urlpatterns = [
     # Authentification
-    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 
     # Utilisateurs

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import (
     Devis,
     Facture,
@@ -61,3 +61,10 @@ class PersonnalisationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Personnalisation
         fields = "__all__"
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username = serializers.EmailField()  # Change le champ username par email
+    
+    def validate(self, attrs):
+        # Personnalise la validation si nécessaire
+        return super().validate(attrs)

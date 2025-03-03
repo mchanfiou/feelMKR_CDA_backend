@@ -21,6 +21,7 @@ from .serializers import (
     ReservationSerializer,
     ServiceSerializer,
     UtilisateurSerializer,
+    CustomTokenObtainPairSerializer,
 )
 import io
 import google.generativeai as genai
@@ -283,6 +284,9 @@ class PersonnalisationList(generics.ListAPIView):
 class PersonnalisationDetail(generics.RetrieveAPIView):
     queryset = Personnalisation.objects.all()
     serializer_class = PersonnalisationSerializer
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 # Configuration de Google Generative AI
 genai.configure(api_key="VOTRE_CLE_API")
