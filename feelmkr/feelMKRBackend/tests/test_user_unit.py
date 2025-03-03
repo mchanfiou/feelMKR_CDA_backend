@@ -1,5 +1,5 @@
 import pytest
-from feelmkr.feelMKRBackend.models import UtilisateurManager
+from feelMKRBackend.models import UtilisateurManager
 
 def test_create_user_without_email():
     manager = UtilisateurManager()

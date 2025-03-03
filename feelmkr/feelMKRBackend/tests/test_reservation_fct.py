@@ -1,6 +1,6 @@
 import pytest
 from rest_framework.test import APIClient
-from feelmkr.feelMKRBackend.models import Utilisateur, Service, Reservation
+from feelMKRBackend.models import Utilisateur, Service, Reservation
 
 @pytest.mark.django_db
 def test_reservation_service():

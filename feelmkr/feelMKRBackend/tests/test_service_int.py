@@ -1,5 +1,5 @@
 import pytest
-from feelmkr.feelMKRBackend.models import Utilisateur, Service
+from feelMKRBackend.models import Utilisateur, Service
 
 @pytest.mark.django_db
 def test_videaste_create_service():
