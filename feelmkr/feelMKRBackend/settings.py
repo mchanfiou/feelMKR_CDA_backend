@@ -85,6 +85,6 @@ else:
             'USER': os.getenv("DBUSER"),
             'PASSWORD': os.getenv("DBPASSWORD"),
             'HOST': os.getenv("HOST"),
-            'PORT': "6543",
+            'PORT': "5432",
         }
     }
