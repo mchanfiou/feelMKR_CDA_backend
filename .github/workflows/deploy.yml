@@ -23,6 +23,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Load environment variables
+        run: |
+          echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> $GITHUB_ENV
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          echo "DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
+        
+      - name: Debug environment variables
+        run: |
+          echo "DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}"
+          echo "DATABASE_URL=${DATABASE_URL}"
+          echo "DEBUG=${DEBUG}"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
