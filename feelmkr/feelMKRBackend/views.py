@@ -51,8 +51,8 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
         # Créer le token JWT
         token_obtain_serializer = TokenObtainPairSerializer(data={
             'email': user.email,
-            'username' : user.email 
-            'password': user.password
+            'username' : user.email, 
+            'password': serializer.validated_data["password"]
         })
         
         # Vérifier que les informations sont valides
