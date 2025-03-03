@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth import authenticate
 from .models import (
     Devis,
     Facture,
@@ -63,11 +64,15 @@ class PersonnalisationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    email = serializers.EmailField(required=True)
+
     def validate(self, attrs):
-        email = attrs.get("username")  # Remplace "username" par "email"
+        email = attrs.get("email")
         password = attrs.get("password")
 
-        from django.contrib.auth import authenticate
+        if not email or not password:
+            raise serializers.ValidationError("Email and password are required")
+
         user = authenticate(email=email, password=password)
 
         if not user:
