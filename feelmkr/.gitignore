@@ -5,6 +5,7 @@ node_modules/
 *.pyc
 *.pyo
 __pycache__/
+.pytest_cache
 
 # Ignorer l'environnement virtuel
 venv/
@@ -27,6 +28,7 @@ db.sqlite3
 *.db
 migrations/__pycache__/
 .coverage
+htmlcov
 
 # Ignorer les fichiers générés par Django
 staticfiles/
