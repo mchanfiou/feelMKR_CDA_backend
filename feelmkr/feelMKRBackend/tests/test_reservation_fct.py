@@ -20,7 +20,7 @@ def test_reservation_service():
     )
 
     response = client.post(
-        "/reservations/", 
+        "https://localhost:5432/reservations/", 
         {"client": utilisateur.id, "service": service.id, "date_reservee": "2025-03-04", "statut": "en attente"}, 
         format="json"
     )
