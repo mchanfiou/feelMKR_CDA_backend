@@ -2,7 +2,6 @@ from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import (
     Devis,
@@ -49,8 +48,12 @@ class UtilisateurListCreate(generics.ListCreateAPIView):
             type_utilisateur=serializer.validated_data["type_utilisateur"],
         )
 
+        if not user.is_active:
+            user.is_active = True
+            user.save()
+
         # Créer le token JWT
-        token_obtain_serializer = TokenObtainPairSerializer(data={
+        token_obtain_serializer = CustomTokenObtainPairSerializer(data={
             'email': user.email,
             'username' : user.email, 
             'password': serializer.validated_data["password"]
