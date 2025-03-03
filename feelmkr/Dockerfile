@@ -4,7 +4,7 @@ FROM python:3.13
 WORKDIR /app
 
 # Copy the requirements file
-COPY requirements.txt .
+COPY feelmkr/requirements.txt .
 
 # Install dependencies
 RUN pip install -r requirements.txt
