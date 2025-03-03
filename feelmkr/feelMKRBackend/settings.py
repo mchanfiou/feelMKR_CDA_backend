@@ -8,7 +8,7 @@ load_dotenv()
 
 IS_TESTING = "pytest" in sys.argv[0]
 
-DEBUG = os.getenv("DEBUG")
+# DEBUG = os.getenv("DEBUG")
 
 # Récupère la clé secrète
 SECRET_KEY = os.getenv(
@@ -29,6 +29,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [

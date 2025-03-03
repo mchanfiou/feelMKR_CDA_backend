@@ -46,7 +46,7 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     nom = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     type_utilisateur = models.CharField(max_length=20, choices=TYPE_UTILISATEUR_CHOICES)
-
+    is_active = models.BooleanField(default=True)
     date_creation = models.DateTimeField(auto_now_add=True)
 
     groups = models.ManyToManyField(
